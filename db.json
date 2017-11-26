@@ -23,6 +23,15 @@
          "tags": [
             "drone"
          ]
+      },
+      {
+         "title": "test",
+         "img_ref": "img/Print-DJI_0149.jpg",
+         "description": "test",
+         "tags": [
+            "test",
+            "drone"
+         ]
       }
    ]
 }
