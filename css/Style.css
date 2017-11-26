@@ -1,0 +1,194 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html, html * {
+    margin: auto;
+    box-sizing: border-box;
+    font-family: Gotham, Helvetica Neue, Helvetica, Arial, " sans-serif";
+}
+
+header {
+    background-color: white;
+    text-align: center;
+    align-content: center;
+}
+
+h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: 200;
+    margin-bottom: 10px;
+	margin-top: 10%;
+}
+
+h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: 200;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 200;
+    margin-bottom: 120px;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 200;
+    margin-bottom: 35px;
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 35px;
+}
+
+img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    float: inherit;
+    vertical-align: text-top;
+}
+
+ol {
+    padding-left: 0px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+
+/* Change the link color to #111 (black) on hover */
+
+li a:hover {
+    background-color: #111;
+}
+
+button[type=submit]:hover{
+    background-color: #111;	
+}
+
+input[type=text], select, textarea {
+    width: 100%; /* Full width */
+    padding: 5px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place*/
+    margin-top: 10px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+	font-size:15px;
+}
+
+input[type=password], select, textarea {
+    width: 100%; /* Full width */
+    padding: 5px; /* Some padding */
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 10px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+	font-size:15px;
+}
+
+button[type=submit] {
+	background-color: gray;
+	color: white;
+	padding: 12px 40px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 20px;
+	margin: 0% 35% 10px;
+	display: block;
+}
+
+/*ID*/
+
+#container {
+    width: 50%;
+    /* Change this value to customize the content area*/
+    margin: 0 auto;
+}
+
+#add_form {
+    margin-top: 10px;
+    font-size: 25px
+}
+
+#log {
+    width: 50px;
+    float: right;
+    text-align: center;
+    text-decoration-color: black;
+    font-size: 16px;
+}
+
+#tag_filter {
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+/*Class*/
+
+.memes_list {
+    margin-top: 5%;
+    border: 2.5px solid black;
+    padding: 10px;
+    background-color: white;
+}
+
+.img {
+    width: 100%;
+    padding: 5px;
+    max-width: auto;
+}
+
+.description {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.tags {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.sign {
+    /* [disabled]margin-left: 0; */
+    margin-left: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right: 6px;
+}
+
+.container {
+    padding: 2.5%;
+}
+
+.nav {
+    list-style-type: none;
+    overflow: auto;
+    background-color: #333;
+}
