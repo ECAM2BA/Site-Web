@@ -191,18 +191,21 @@ class SiteWeb():
                 usersdb = self.users[i]
                 if uname == usersdb['username'] or psw == usersdb['password']:
                     cherrypy.session['user'] = uname
+                    cherrypy.session['psw'] = psw
                     raise cherrypy.HTTPRedirect('/')
-
-            for z in range(len(self.admin)):
-                admindb = self.admin[z]
-                if uname == admindb['username'] and psw == admindb['password']:
-                    cherrypy.session['user'] = uname
-                    raise cherrypy.HTTPRedirect('html/admin.html')
 
     @cherrypy.expose
     def logout(self):
         cherrypy.lib.sessions.expire()
         raise cherrypy.HTTPRedirect('/')
+
+    @cherrypy.expose
+    def admin(self):
+        session = cherrypy.session
+        for i in range(len(self.admin)):
+            admin=self.admin[i]
+            if session.get('user') in admin['username'] and session.get('psw') in admin['password']:
+                return serve_file(os.path.join(CURDIR, 'html/admin.html'))
 
     @cherrypy.expose
     def getmeme(self):
