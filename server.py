@@ -1,6 +1,7 @@
 
 import json
 import os.path
+import cherrypy.lib.sessions
 
 import cherrypy
 import jinja2
@@ -98,18 +99,19 @@ class SiteWeb():
         else:
             mains = '<ol>'
             for i in range(len(self.memes)):
-                datamemes = self.memes[i]
-                tags_strings = str(datamemes['tags'])[1:-1]
-                mains += '''
-                <div>
-                <ul class="memes_list">
-                    <h2 >{}</h2>
-                    <img src="{}" class="img">
-                    <p class="description">{}</p>
-                    <p class="tags">{}</p>
-                </ul>
-                </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings)
-                mains += '</ol>'
+                    datamemes = self.memes[i]
+                    tags_strings = str(datamemes['tags'])[1:-1]
+                    mains += '''
+                    <div>
+                    <ul class="memes_list">
+                        <h2 >{}</h2>
+                        <img src="{}" class="img">
+                        <p class="description">{}</p>
+                        <p class="tags">{}</p>
+                        <p class="tags">{}</p>
+                    </ul>
+                    </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings,datamemes['user'])
+                    mains += '</ol>'
         return {'links': mains}
 
     @cherrypy.expose
@@ -165,20 +167,22 @@ class SiteWeb():
                     data = memesimg.file.read(8192)
                     if not data:
                         break
-                    ufile.write(data)
-            self.memes.append({
-                'title': title,
-                'img_ref': 'img/'+memesimg.filename,
-                'description': description,
-                'tags': tags.split(','),
-            })
-            self.savememes()
+                ufile.write(data)
+                self.memes.append({
+                    'title': title,
+                    'img_ref': 'img/'+memesimg.filename,
+                    'description': description,
+                    'user':cherrypy.session.get('user'),
+                    'tags': tags.split(','),
+                })
+                self.savememes()
         raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def createusers(self, uname, psw):
         if uname != '' and psw != '':
             if len(self.users) == 0:
+                cherrypy.session['user'] = uname
                 self.users.append({
                     'username': uname,
                     'password': psw,
@@ -190,6 +194,7 @@ class SiteWeb():
                 usersdb = self.users[i]
                 try:
                     if uname != usersdb['username'] or psw != usersdb['password']:
+                        cherrypy.session['user'] = uname
                         self.users.append({
                             'username': uname,
                             'password': psw,
@@ -205,11 +210,13 @@ class SiteWeb():
             for i in range(len(self.users)):
                 usersdb = self.users[i]
                 if uname == usersdb['username'] or psw == usersdb['password']:
+                    cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
 
             for z in range(len(self.admin)):
                 admindb = self.admin[z]
                 if uname == admindb['username'] and psw == admindb['password']:
+                    cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('html/admin.html')
 
     @cherrypy.expose

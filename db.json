@@ -1,21 +1,21 @@
 {
    "memes": [
-
-      {
-         "title": "test 2",
-         "img_ref": "img/Print-DJI_0149.jpg",
-         "description": "test test ",
-         "tags": [
-            "drone"
-         ]
-      },
       {
          "title": "test",
          "img_ref": "img/Print-DJI_0149.jpg",
          "description": "test",
+         "user": "victor",
          "tags": [
-            "test",
-            "drone"
+            "test"
+         ]
+      },
+      {
+         "title": "test 2",
+         "img_ref": "img/finlande-05-290117.jpg",
+         "description": "test",
+         "user": "smits",
+         "tags": [
+            "test"
          ]
       }
    ]

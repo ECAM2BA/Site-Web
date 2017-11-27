@@ -9,8 +9,12 @@
          "password": "smits"
       },
       {
-         "username": "victor",
-         "password": "smits"
+         "username": "smits",
+         "password": "victor"
+      },
+      {
+         "username": "smits",
+         "password": "victor"
       }
    ]
 }
