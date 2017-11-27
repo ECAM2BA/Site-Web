@@ -117,7 +117,7 @@ class SiteWeb():
     @cherrypy.expose
     def add(self):
         """Page with a form to add a new link."""
-        if cherrypy.sessions.get('user')!=0:
+        if cherrypy.session.get('user') !='':
             return serve_file(os.path.join(CURDIR, 'html/add.html'))
         else:
             self.createuserscall()
@@ -201,9 +201,9 @@ class SiteWeb():
 
     @cherrypy.expose
     def logout(self):
-        for i in range(len(self.users)):
-            if cherrypy.sessions.get('user') in self.users[i]['username']:
-                cherrypy.session['user']=''
+        if cherrypy.session.get('user') != '':
+            cherrypy.session.expire()
+            raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def getmeme(self):
