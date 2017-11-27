@@ -207,9 +207,6 @@ class SiteWeb():
                 if uname == usersdb['username'] or psw == usersdb['password']:
                     raise cherrypy.HTTPRedirect('/')
 
-                if uname != usersdb['username'] or psw != usersdb['password']:
-                     self.createuserscall()
-
             for z in range(len(self.admin)):
                 admindb = self.admin[z]
                 if uname == admindb['username'] and psw == admindb['password']:
