@@ -86,7 +86,8 @@ class SiteWeb():
                     <p class="tags">{}</p>
                     <p class="tags">{}</p>
                 </ul>
-                </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings,datamemes['users'])
+                </div>'''.format(datamemes['title'], datamemes['img_ref'], datamemes['description'],
+                                 tags_strings, datamemes['users'])
                 mains += '</ol>'
         return {'links': mains}
 
@@ -116,7 +117,10 @@ class SiteWeb():
     @cherrypy.expose
     def add(self):
         """Page with a form to add a new link."""
-        return serve_file(os.path.join(CURDIR, 'html/add.html'))
+        if cherrypy.sessions.get('user')!=0:
+            return serve_file(os.path.join(CURDIR, 'html/add.html'))
+        else:
+            self.createuserscall()
 
     @cherrypy.expose
     def logincall(self):
@@ -134,7 +138,7 @@ class SiteWeb():
         return serve_file(os.path.join(CURDIR, 'html/search.html'))
 
     @cherrypy.expose
-    def addmeme(self, title, memesimg, description,tags):
+    def addmeme(self, title, memesimg, description, tags):
         """POST route to add a new link to the database."""
         if title != '' and memesimg:
             upload_path = os.path.join(CURDIR, 'img/' + memesimg.filename)
@@ -181,7 +185,7 @@ class SiteWeb():
                     pass
 
     @cherrypy.expose
-    def login(self,uname, psw):
+    def login(self, uname, psw):
         if uname != '' and psw != '':
             for i in range(len(self.users)):
                 usersdb = self.users[i]
@@ -189,14 +193,17 @@ class SiteWeb():
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
 
-                if uname != usersdb['username'] or psw != usersdb['password']:
-                     self.createuserscall()
-
             for z in range(len(self.admin)):
                 admindb = self.admin[z]
                 if uname == admindb['username'] and psw == admindb['password']:
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('html/admin.html')
+
+    @cherrypy.expose
+    def logout(self):
+        for i in range(len(self.users)):
+            if cherrypy.sessions.get('user') in self.users[i]['username']:
+                cherrypy.session['user']=''
 
     @cherrypy.expose
     def getmeme(self):
@@ -214,6 +221,7 @@ class SiteWeb():
             del (self.memes[i])
             result = 'OK'
         return result.encode('utf-8')
+
 if __name__ == '__main__':
 
     # Register Jinja2 plugin and tool
