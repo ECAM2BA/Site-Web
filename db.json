@@ -4,7 +4,7 @@
          "title": "test",
          "img_ref": "img/finlande-09-310117.jpg",
          "description": "test",
-         "user": null,
+         "users": "victor",
          "tags": [
             "est"
          ]
@@ -13,7 +13,25 @@
          "title": "test",
          "img_ref": "img/finlande-13-310117.jpg",
          "description": "test",
-         "user": "test",
+         "users": "victor",
+         "tags": [
+            "test"
+         ]
+      },
+      {
+         "title": "test",
+         "img_ref": "img/finlande-15-310117.jpg",
+         "description": "test",
+         "users": "victor",
+         "tags": [
+            "test"
+         ]
+      },
+      {
+         "title": "test 3",
+         "img_ref": "img/finlande-14-310117.jpg",
+         "description": "test",
+         "users": null,
          "tags": [
             "test"
          ]

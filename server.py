@@ -1,7 +1,6 @@
 
 import json
 import os.path
-import cherrypy.lib.sessions
 
 import cherrypy
 import jinja2
@@ -68,7 +67,6 @@ class SiteWeb():
             cherrypy.log('Loading database failed.')
             return []
 
-
     @cherrypy.expose
     def index(self):
         """Main page of the SYL's application."""
@@ -77,19 +75,19 @@ class SiteWeb():
         else:
             mains = '<ol>'
             for i in range(len(self.memes)):
-                    datamemes = self.memes[i]
-                    tags_strings = str(datamemes['tags'])[1:-1]
-                    mains += '''
-                    <div>
-                    <ul class="memes_list">
-                        <h2 >{}</h2>
-                        <img src="{}" class="img">
-                        <p class="description">{}</p>
-                        <p class="tags">{}</p>
-                        <p class="tags">{}</p>
-                    </ul>
-                    </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings,datamemes['user'])
-                    mains += '</ol>'
+                datamemes = self.memes[i]
+                tags_strings = str(datamemes['tags'])[1:-1]
+                mains += '''
+                <div>
+                <ul class="memes_list">
+                    <h2 >{}</h2>
+                    <img src="{}" class="img">
+                    <p class="description">{}</p>
+                    <p class="tags">{}</p>
+                    <p class="tags">{}</p>
+                </ul>
+                </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings,datamemes['users'])
+                mains += '</ol>'
         return {'links': mains}
 
     @cherrypy.expose
@@ -145,15 +143,15 @@ class SiteWeb():
                     data = memesimg.file.read(8192)
                     if not data:
                         break
-                ufile.write(data)
-                self.memes.append({
-                    'title': title,
-                    'img_ref': 'img/'+memesimg.filename,
-                    'description': description,
-                    'user':cherrypy.session.get('user'),
-                    'tags': tags.split(','),
-                })
-                self.savememes()
+                    ufile.write(data)
+            self.memes.append({
+                'title': title,
+                'img_ref': 'img/'+memesimg.filename,
+                'description': description,
+                'users':cherrypy.session.get('user'),
+                'tags': tags.split(','),
+            })
+            self.savememes()
         raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
@@ -172,7 +170,7 @@ class SiteWeb():
                 usersdb = self.users[i]
                 try:
                     if uname != usersdb['username'] or psw != usersdb['password']:
-                        cherrypy.session['user'] = uname
+                        cherrypy.session['user']=uname
                         self.users.append({
                             'username': uname,
                             'password': psw,
@@ -190,6 +188,9 @@ class SiteWeb():
                 if uname == usersdb['username'] or psw == usersdb['password']:
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
+
+                if uname != usersdb['username'] or psw != usersdb['password']:
+                     self.createuserscall()
 
             for z in range(len(self.admin)):
                 admindb = self.admin[z]
@@ -213,7 +214,6 @@ class SiteWeb():
             del (self.memes[i])
             result = 'OK'
         return result.encode('utf-8')
-
 if __name__ == '__main__':
 
     # Register Jinja2 plugin and tool
