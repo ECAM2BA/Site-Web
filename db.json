@@ -2,18 +2,9 @@
    "memes": [
       {
          "title": "test",
-         "img_ref": "img/Print-DJI_0149.jpg",
+         "img_ref": "img/finlande-07-290117.jpg",
          "description": "test",
-         "user": "victor",
-         "tags": [
-            "test"
-         ]
-      },
-      {
-         "title": "test 2",
-         "img_ref": "img/finlande-05-290117.jpg",
-         "description": "test",
-         "user": "smits",
+         "user": null,
          "tags": [
             "test"
          ]
