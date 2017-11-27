@@ -17,8 +17,6 @@ class SiteWeb():
         self.memes = self.loadmeme()
         self.users = self.loadusers()
         self.admin = self.loadadmin()
-        self.users_conec = self.load_users_conec()
-
 
     def loadusers(self):
         """Load links' database from the 'users.json' file."""
@@ -69,26 +67,6 @@ class SiteWeb():
         except:
             cherrypy.log('Loading database failed.')
             return []
-
-    def load_users_conec(self):
-        """Load links' database from the 'users_conec.json' file."""
-        try:
-            with open('users_conec.json', 'r') as file:
-                content = json.loads(file.read())
-                return content['users_conec']
-        except:
-            cherrypy.log('Loading database failed.')
-            return []
-
-    def save_users_conec(self):
-        """Save links' database to the 'users_conec.json' file."""
-        try:
-            with open('users_conec.json', 'w') as file:
-                file.write(json.dumps({
-                    'users_conec': self.users_conec
-                }, ensure_ascii=False, indent=3))
-        except:
-            cherrypy.log('Saving database failed.')
 
 
     @cherrypy.expose
@@ -235,24 +213,6 @@ class SiteWeb():
             del (self.memes[i])
             result = 'OK'
         return result.encode('utf-8')
-
-    '''@cherrypy.expose
-    def getusers(self):
-        """GET route to get all the users."""
-        return json.dumps({
-            'memes': self.users
-        }, ensure_ascii=False).encode('utf-8')'''
-
-    '''@cherrypy.expose
-    def deleteuser(self, i):
-        """GET route to delete a user."""
-        result = 'KO'
-        i = int(i)
-        if 0 <= i < len(self.users):
-            del(self.users[i])
-            result = 'OK'
-        return result.encode('utf-8')
-        '''
 
 if __name__ == '__main__':
 

@@ -2,9 +2,18 @@
    "memes": [
       {
          "title": "test",
-         "img_ref": "img/finlande-07-290117.jpg",
+         "img_ref": "img/finlande-09-310117.jpg",
          "description": "test",
          "user": null,
+         "tags": [
+            "est"
+         ]
+      },
+      {
+         "title": "test",
+         "img_ref": "img/finlande-13-310117.jpg",
+         "description": "test",
+         "user": "test",
          "tags": [
             "test"
          ]
