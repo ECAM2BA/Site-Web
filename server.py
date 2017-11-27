@@ -201,9 +201,8 @@ class SiteWeb():
 
     @cherrypy.expose
     def logout(self):
-        if cherrypy.session.get('user') != '':
-            cherrypy.session.expire()
-            raise cherrypy.HTTPRedirect('/')
+        cherrypy.lib.sessions.expire()
+        raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def getmeme(self):
