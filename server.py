@@ -68,10 +68,10 @@ class SiteWeb():
             return []
 
     @cherrypy.expose
-    def index(self):
+    def index(self,tag_filter=''):
         """Main page of the SYL's application."""
         usersession= ''
-
+        img=''
         if cherrypy.session.get('user')== None:
             usersession='''<p><a href="logincall">login</a></p>'''
 
@@ -85,6 +85,13 @@ class SiteWeb():
             for i in range(len(self.memes)):
                 datamemes = self.memes[i]
                 tags_strings = str(datamemes['tags'])[1:-1]
+
+                if tag_filter in datamemes['tags']:
+                    img = datamemes['img_ref']
+                    
+                else:
+                    img = datamemes['img_ref']
+
                 mains += '''
                 <div>
                 <ul class="memes_list">
@@ -94,33 +101,10 @@ class SiteWeb():
                     <p class="tags">{}</p>
                     <p class="tags">{}</p>
                 </ul>
-                </div>'''.format(datamemes['title'], datamemes['img_ref'], datamemes['description'],
+                </div>'''.format(datamemes['title'], img, datamemes['description'],
                                  tags_strings, datamemes['users'])
                 mains += '</ol>'
         return {'links': mains, 'user': usersession}
-
-    @cherrypy.expose
-    def filter_index(self,tag_filter):
-        """Main page of the SYL's application."""
-        if len(self.memes) == 0:
-            mains = '<p>No memes in the database.</p>'
-        else:
-            mains = '<ol>'
-            for i in range(len(self.memes)):
-                datamemes = self.memes[i]
-                tags_strings = str(datamemes['tags'])[1:-1]
-                if tag_filter in datamemes['tags']:
-                    mains += '''
-                    <div>
-                    <ul class="memes_list">
-                        <h2 >{}</h2>
-                        <img src="{}" class="img">
-                        <p class="description">{}</p>
-                        <p class="tags">{}</p>
-                    </ul>
-                    </div>'''.format(datamemes['title'], datamemes['img_ref'],datamemes['description'],tags_strings)
-                    mains += '</ol>'
-        return {'filter_memes': mains}
 
     @cherrypy.expose
     def add(self):
@@ -139,11 +123,6 @@ class SiteWeb():
 
     @cherrypy.expose
     def createuserscall(self):
-        """Page with a form to add a new link."""
-        return {}
-
-    @cherrypy.expose
-    def search_call(self):
         """Page with a form to add a new link."""
         return {}
 
