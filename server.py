@@ -71,7 +71,6 @@ class SiteWeb():
     def index(self,tag_filter=''):
         """Main page of the SYL's application."""
         usersession= ''
-        img=''
         if cherrypy.session.get('user')== None:
             usersession='''<p><a href="logincall">login</a></p>'''
 
@@ -86,24 +85,21 @@ class SiteWeb():
                 datamemes = self.memes[i]
                 tags_strings = str(datamemes['tags'])[1:-1]
 
-                if tag_filter in datamemes['tags']:
-                    img = datamemes['img_ref']
-                    
-                else:
+                if tag_filter in datamemes['tags'] or tag_filter == "":
                     img = datamemes['img_ref']
 
-                mains += '''
-                <div>
-                <ul class="memes_list">
-                    <h2 >{}</h2>
-                    <img src="{}" class="img">
-                    <p class="description">{}</p>
-                    <p class="tags">{}</p>
-                    <p class="tags">{}</p>
-                </ul>
-                </div>'''.format(datamemes['title'], img, datamemes['description'],
-                                 tags_strings, datamemes['users'])
-                mains += '</ol>'
+                    mains += '''
+                    <div>
+                    <ul class="memes_list">
+                        <h2 >{}</h2>
+                        <img src="{}" class="img">
+                        <p class="description">{}</p>
+                        <p class="tags">{}</p>
+                        <p class="tags">{}</p>
+                    </ul>
+                    </div>'''.format(datamemes['title'], img, datamemes['description'],
+                                     tags_strings, datamemes['users'])
+                    mains += '</ol>'
         return {'links': mains, 'user': usersession}
 
     @cherrypy.expose
