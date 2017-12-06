@@ -70,6 +70,14 @@ class SiteWeb():
     @cherrypy.expose
     def index(self):
         """Main page of the SYL's application."""
+        usersession= ''
+
+        if cherrypy.session.get('user')== None:
+            usersession='''<p><a href="logincall">login</a></p>'''
+
+        if cherrypy.session.get('user')!= None:
+            usersession= '''<p>{}/<a href="logout">logout</a></p>'''.format(cherrypy.session.get('user'))
+
         if len(self.memes) == 0:
             mains = '<p>No memes in the database.</p>'
         else:
@@ -89,7 +97,7 @@ class SiteWeb():
                 </div>'''.format(datamemes['title'], datamemes['img_ref'], datamemes['description'],
                                  tags_strings, datamemes['users'])
                 mains += '</ol>'
-        return {'links': mains}
+        return {'links': mains, 'user': usersession}
 
     @cherrypy.expose
     def filter_index(self,tag_filter):
@@ -191,12 +199,13 @@ class SiteWeb():
                 usersdb = self.users[i]
                 if uname == usersdb['username'] or psw == usersdb['password']:
                     cherrypy.session['user'] = uname
-                    cherrypy.session['psw'] = psw
                     raise cherrypy.HTTPRedirect('/')
+                else:
+                    raise cherrypy.HTTPRedirect('html/createusers.html')
 
     @cherrypy.expose
     def logout(self):
-        cherrypy.lib.sessions.expire()
+        del(cherrypy.session['user'])
         raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
