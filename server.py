@@ -124,10 +124,12 @@ class SiteWeb():
 
     @cherrypy.expose
     def add(self):
-        """Page with a form to add a new link."""
-        if cherrypy.session.get('user') != None:
+        print (cherrypy.session.get('user'))
+        if cherrypy.session.get('user') is not None:
+            print("if")
             return {}
         else:
+            print("else")
             raise cherrypy.HTTPRedirect('/logincall')
 
     @cherrypy.expose
