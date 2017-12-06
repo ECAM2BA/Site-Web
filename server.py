@@ -198,6 +198,24 @@ class SiteWeb():
             result = 'OK'
         return result.encode('utf-8')
 
+    @cherrypy.expose
+    def getusers(self):
+        """GET route to get all the memes."""
+        return json.dumps({
+            'users': self.users
+        }, ensure_ascii=False).encode('utf-8')
+
+    @cherrypy.expose
+    def deleteusers(self, i):
+        """GET route to delete a link."""
+        result = 'KO'
+        i = int(i)
+        if 0 <= i < len(self.users):
+            del (self.users[i])
+            result = 'OK'
+        return result.encode('utf-8')
+
+
 if __name__ == '__main__':
 
     # Register Jinja2 plugin and tool

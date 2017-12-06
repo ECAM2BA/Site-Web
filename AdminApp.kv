@@ -1,8 +1,10 @@
 AdminAppForm:
     rows: 4
-    cols: 1
+    cols: 2
     memes_spr: memes
+    users_spr: users
     detail_Memes_txt: detail_Memes
+    detail_users_txt: detail_users
     Label:
         text: str(len(root.memes)) + ' data loaded.'
         size_hint_y: 1
@@ -24,3 +26,24 @@ AdminAppForm:
         Button:
             text: 'Delete'
             on_press: root.delete()
+    Label:
+        text: str(len(root.users)) + ' data loaded.'
+        size_hint_y: 1
+
+    Spinner:
+        id: users
+        values: root.users_list
+        size_hint_y: 1
+        on_text: root.show_detail_users(self.text)
+
+    TextInput:
+        id: detail_users
+        readonly: True
+        size_hint_y: 7
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 1
+        Button:
+            text: 'Delete'
+            on_press: root.delete_users()
