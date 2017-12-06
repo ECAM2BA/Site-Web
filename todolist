@@ -2,12 +2,9 @@
     -manage user
     -manage meme
     -manage admin
--login setup
--logout setup
 -(admin page)
 -private acces add page
 -filter page
--show whos connected
--show meme's autor
 -nav bar scroll lock
 -gestion d'erreur
+-cript password

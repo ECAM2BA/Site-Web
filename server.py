@@ -125,10 +125,10 @@ class SiteWeb():
     @cherrypy.expose
     def add(self):
         """Page with a form to add a new link."""
-        if cherrypy.session.get('user') !='':
+        if cherrypy.session.get('user') != None:
             return serve_file(os.path.join(CURDIR, 'html/add.html'))
         else:
-            self.createuserscall()
+            raise cherrypy.HTTPRedirect('/logincall')
 
     @cherrypy.expose
     def logincall(self):
@@ -168,29 +168,25 @@ class SiteWeb():
 
     @cherrypy.expose
     def createusers(self, uname, psw):
-        if uname != '' and psw != '':
-            if len(self.users) == 0:
-                cherrypy.session['user'] = uname
+        if len(self.users)==0:
+            cherrypy.session['user'] = uname
+            self.users.append({
+                'username': uname,
+                'password': psw,
+            })
+            self.saveusers()
+            raise cherrypy.HTTPRedirect('/')
+
+        for i in range(len(self.users)):
+            usersdb = self.users[i]
+            if uname != usersdb['username'] and psw != usersdb['password']:
+                cherrypy.session['user']=uname
                 self.users.append({
                     'username': uname,
                     'password': psw,
                 })
                 self.saveusers()
-                raise cherrypy.HTTPRedirect('/')
-
-            for i in range(len(self.users)):
-                usersdb = self.users[i]
-                try:
-                    if uname != usersdb['username'] or psw != usersdb['password']:
-                        cherrypy.session['user']=uname
-                        self.users.append({
-                            'username': uname,
-                            'password': psw,
-                        })
-                        self.saveusers()
-                        raise cherrypy.HTTPRedirect('/')
-                except:
-                    pass
+            raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def login(self, uname, psw):
@@ -201,20 +197,12 @@ class SiteWeb():
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
                 else:
-                    raise cherrypy.HTTPRedirect('html/createusers.html')
+                    raise cherrypy.HTTPRedirect('/createuserscall')
 
     @cherrypy.expose
     def logout(self):
         del(cherrypy.session['user'])
         raise cherrypy.HTTPRedirect('/')
-
-    @cherrypy.expose
-    def admin(self):
-        session = cherrypy.session
-        for i in range(len(self.admin)):
-            admin=self.admin[i]
-            if session.get('user') in admin['username'] and session.get('psw') in admin['password']:
-                return serve_file(os.path.join(CURDIR, 'html/admin.html'))
 
     @cherrypy.expose
     def getmeme(self):
