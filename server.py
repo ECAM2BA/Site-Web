@@ -126,24 +126,24 @@ class SiteWeb():
     def add(self):
         """Page with a form to add a new link."""
         if cherrypy.session.get('user') != None:
-            return serve_file(os.path.join(CURDIR, 'html/add.html'))
+            return {}
         else:
             raise cherrypy.HTTPRedirect('/logincall')
 
     @cherrypy.expose
     def logincall(self):
         """Page with a form to add a new link."""
-        return serve_file(os.path.join(CURDIR, 'html/login.html'))
+        return {}
 
     @cherrypy.expose
     def createuserscall(self):
         """Page with a form to add a new link."""
-        return serve_file(os.path.join(CURDIR, 'html/createusers.html'))
+        return {}
 
     @cherrypy.expose
     def search_call(self):
         """Page with a form to add a new link."""
-        return serve_file(os.path.join(CURDIR, 'html/search.html'))
+        return {}
 
     @cherrypy.expose
     def addmeme(self, title, memesimg, description, tags):
@@ -224,7 +224,7 @@ class SiteWeb():
 if __name__ == '__main__':
 
     # Register Jinja2 plugin and tool
-    ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('.'))
+    ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('./html'))
     jinja2plugin.Jinja2TemplatePlugin(cherrypy.engine, env=ENV).subscribe()
     cherrypy.tools.template = jinja2tool.Jinja2Tool()
 

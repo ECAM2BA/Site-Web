@@ -1,27 +1,6 @@
-<!DOCTYPE html>
-
-<html>
-<head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="/css/Style.css">
-<title>Site Web</title>
-</head>
-
-<body id="container">
-<header>
-  <h1>Sign Up Page</h1>
-  <!--  <div id="log"><a href="logincall">login</a>|<a href="createuserscall">create users</a></div>-->
-  <nav>
-    <ul class="nav">
-      <li><a href="index">Home</a></li>
-      <li><a href="add">Add a meme</a></li>
-      <li><a href="logincall">login</a></li>
-      <li><a href="logout">logout</a></li>
-      <li><a href="createuserscall">create users</a></li>
-      <li><a href="search_call">search</a></li>
-    </ul>
-  </nav>
-</header>
+{% extends "base.html" %}
+{% block title %}Create User{% endblock %}
+{% block content %}
 <form action="createusers" >
   <div class="container">
     <label><b>Username</b></label>
@@ -31,5 +10,4 @@
     <button type="submit">Sign Up</button>
   </div>
 </form>
-</body>
-</html>
+{% endblock %}

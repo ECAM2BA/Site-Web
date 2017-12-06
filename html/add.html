@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 
-<html>
-<head>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="/css/Style.css">
-<title>Site Web</title>
-</head>
-
-<body id="container">
-<header>
-  <h1>Add Meme Page</h1>
-  <!--  <div id="log"><a href="logincall">login</a>|<a href="createuserscall">create users</a></div>-->
-  <nav>
-    <ul class="nav">
-      <li><a href="index">Home</a></li>
-      <li><a href="add">Add a meme</a></li>
-      <li><a href="logincall">login</a></li>
-		<li><a href="logout">logout</a></li>
-      <li><a href="createuserscall">create users</a></li>
-      <li><a href="search_call">search</a></li>
-    </ul>
-  </nav>
-</header>
+{% extends "base.html" %}
+{% block title %}Add meme{% endblock %}
+{% block content %}
 <form method="post" action="addmeme" enctype="multipart/form-data" id="add_form">
   <h2 style="margin-top: 10px">
     <label>Title<br/>
@@ -43,5 +24,4 @@
   </h2>
   <button type="submit" class="submit">Add</button>
 </form>
-</body>
-</html>
+{% endblock %}
