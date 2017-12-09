@@ -67,15 +67,24 @@ class SiteWeb():
             cherrypy.log('Loading database failed.')
             return []
 
+    def user_session(self):
+        if cherrypy.session.get('user') is None:
+            user_session = '''<p><a href="logincall">login</a></p>'''
+
+        if cherrypy.session.get('user') is not None:
+            user_session = '''<p>{}/<a href="user_profile">user profile</a>/<a href="logout">logout</a></p>'''.format(
+                cherrypy.session.get('user'))
+        return user_session
+
     @cherrypy.expose
     def index(self,tag_filter=''):
         """Main page of the SYL's application."""
-        usersession= ''
-        if cherrypy.session.get('user')== None:
-            usersession='''<p><a href="logincall">login</a></p>'''
+        user_session= ''
+        if cherrypy.session.get('user') is None:
+            user_session='''<p><a href="logincall">login</a></p>'''
 
-        if cherrypy.session.get('user')!= None:
-            usersession= '''<p>{}/<a href="logout">logout</a></p>'''.format(cherrypy.session.get('user'))
+        if cherrypy.session.get('user')is not None:
+            user_session= '''<p>{}/<a href="user_profile">user profile</a>/<a href="logout">logout</a></p>'''.format(cherrypy.session.get('user'))
 
         if len(self.memes) == 0:
             mains = '<p>No memes in the database.</p>'
@@ -100,14 +109,44 @@ class SiteWeb():
                     </div>'''.format(datamemes['title'], img, datamemes['description'],
                                      tags_strings, datamemes['users'])
                     mains += '</ol>'
-        return {'links': mains, 'user': usersession}
+        return {'links': mains, 'user': user_session}
+
+    @cherrypy.expose
+    def user_profile(self):
+        if cherrypy.session.get('user') is not None:
+            if len(self.memes) == 0:
+                user_profile = '<p>No memes link to the user</p>'
+            else:
+                user_profile = '<ol>'
+                for i in range(len(self.memes)):
+                    datamemes = self.memes[i]
+                    tags_strings = str(datamemes['tags'])[1:-1]
+
+                    if cherrypy.session.get('user') != datamemes['users']:
+                        user_profile = '<p>No memes link to the user</p>'
+
+                    if cherrypy.session.get('user') == datamemes['users']:
+                        img = datamemes['img_ref']
+                        user_profile += '''
+                        <div>
+                        <ul class="memes_list">
+                            <h2 >{}</h2>
+                            <img src="{}" class="img">
+                            <p class="description">{}</p>
+                            <p class="tags">{}</p>
+                            <p class="tags">{}</p>
+                        </ul>
+                        </div>'''.format(datamemes['title'], img, datamemes['description'],
+                                         tags_strings, datamemes['users'])
+                        user_profile += '</ol>'
+            return {'user_profile': user_profile,'user':self.user_session()}
 
     @cherrypy.expose
     def add(self):
         print (cherrypy.session.get('user'))
         if cherrypy.session.get('user') is not None:
             print("if")
-            return {}
+            return {'user':self.user_session()}
         else:
             print("else")
             raise cherrypy.HTTPRedirect('/logincall')
@@ -115,12 +154,12 @@ class SiteWeb():
     @cherrypy.expose
     def logincall(self):
         """Page with a form to add a new link."""
-        return {}
+        return {'user':self.user_session()}
 
     @cherrypy.expose
     def createuserscall(self):
         """Page with a form to add a new link."""
-        return {}
+        return {'user':self.user_session()}
 
     @cherrypy.expose
     def addmeme(self, title, memesimg, description, tags):

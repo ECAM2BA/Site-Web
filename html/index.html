@@ -9,7 +9,7 @@
 <body id="container">
 <header>
   <h1>Welcome on my SiteWeb!</h1>
-	<div>{{user}}</div>
+  <div>{{user}}</div>
   <nav>
     <ul class="nav">
       <li><a href="index">Home</a></li>
@@ -17,10 +17,10 @@
       <li><a href="createuserscall">create users</a></li>
     </ul>
   </nav>
+  <form action="index">
+    <input type="text" id="tag_filter" name="tag_filter" placeholder="tags filter">
+  </form>
 </header>
-	<form action="index">
-	<input type="text" id="tag_filter" name="tag_filter" placeholder="tags filter">
-	</form>	
 <main>
   <div>{{links}}</div>
 </main>
