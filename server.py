@@ -69,11 +69,12 @@ class SiteWeb():
 
     def user_session(self):
         if cherrypy.session.get('user') is None:
-            user_session = '''<p><a href="logincall">login</a></p>'''
+            user_session = '''<li><a href="logincall">login</a></li>'''
 
         if cherrypy.session.get('user') is not None:
-            user_session = '''<p>{}/<a href="user_profile">user profile</a>/<a href="logout">logout</a></p>'''.format(
-                cherrypy.session.get('user'))
+            user_session = '''<p>{}</p>
+                <li><a href="user_profile">user profile</a></li>
+                <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
     @cherrypy.expose
@@ -115,15 +116,12 @@ class SiteWeb():
     def user_profile(self):
         if cherrypy.session.get('user') is not None:
             if len(self.memes) == 0:
-                user_profile = '<p>No memes link to the user</p>'
+                user_profile = '<p>No memes</p>'
             else:
                 user_profile = '<ol>'
                 for i in range(len(self.memes)):
                     datamemes = self.memes[i]
                     tags_strings = str(datamemes['tags'])[1:-1]
-
-                    if cherrypy.session.get('user') != datamemes['users']:
-                        user_profile = '<p>No memes link to the user</p>'
 
                     if cherrypy.session.get('user') == datamemes['users']:
                         img = datamemes['img_ref']
@@ -139,7 +137,11 @@ class SiteWeb():
                         </div>'''.format(datamemes['title'], img, datamemes['description'],
                                          tags_strings, datamemes['users'])
                         user_profile += '</ol>'
-            return {'user_profile': user_profile,'user':self.user_session()}
+
+                    else:
+                        user_profile = '<p>No memes link to the user</p>'
+
+            return {'user_profile': user_profile ,'user': self.user_session()}
 
     @cherrypy.expose
     def add(self):
