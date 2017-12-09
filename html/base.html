@@ -4,12 +4,11 @@
 <head>
 <meta charset="utf-8" />
 <link rel="stylesheet" href="/css/Style.css">
-<title>{% block title %}{% endblock %}-Site Web</title>
+<title>-Site Web</title>
 </head>
 <body id="container">
 <header>
-  <h1>Welcome on my SiteWeb!</h1>
-	<div>{{user}}</div>
+  <h1>{% block h1 %}{% endblock %}</h1>
   <nav>
     <ul class="nav">
       <li><a href="index">Home</a></li>

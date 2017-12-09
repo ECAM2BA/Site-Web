@@ -68,25 +68,18 @@ class SiteWeb():
             return []
 
     def user_session(self):
+        user_session=''
         if cherrypy.session.get('user') is None:
             user_session = '''<li><a href="logincall">login</a></li>'''
 
         if cherrypy.session.get('user') is not None:
-            user_session = '''<p>{}</p>
-                <li><a href="user_profile">user profile</a></li>
+            user_session = '''<li><a href="user_profile">user profile : {}</a></li>
                 <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
     @cherrypy.expose
     def index(self,tag_filter=''):
         """Main page of the SYL's application."""
-        user_session= ''
-        if cherrypy.session.get('user') is None:
-            user_session='''<p><a href="logincall">login</a></p>'''
-
-        if cherrypy.session.get('user')is not None:
-            user_session= '''<p>{}/<a href="user_profile">user profile</a>/<a href="logout">logout</a></p>'''.format(cherrypy.session.get('user'))
-
         if len(self.memes) == 0:
             mains = '<p>No memes in the database.</p>'
         else:
@@ -110,11 +103,12 @@ class SiteWeb():
                     </div>'''.format(datamemes['title'], img, datamemes['description'],
                                      tags_strings, datamemes['users'])
                     mains += '</ol>'
-        return {'links': mains, 'user': user_session}
+        return {'links': mains, 'user': self.user_session()}
 
     @cherrypy.expose
     def user_profile(self):
         if cherrypy.session.get('user') is not None:
+            title ="<h2 >Welcome on you profile {}</h2>".format(cherrypy.session.get('user'))
             if len(self.memes) == 0:
                 user_profile = '<p>No memes</p>'
             else:
@@ -141,7 +135,7 @@ class SiteWeb():
                     else:
                         user_profile = '<p>No memes link to the user</p>'
 
-            return {'user_profile': user_profile ,'user': self.user_session()}
+            return {'user_profile': user_profile, 'user': self.user_session(), 'title': title}
 
     @cherrypy.expose
     def add(self):
@@ -211,7 +205,7 @@ class SiteWeb():
         if uname != '' and psw != '':
             for i in range(len(self.users)):
                 usersdb = self.users[i]
-                if uname == usersdb['username'] or psw == usersdb['password']:
+                if uname in usersdb['username'] and psw in usersdb['password']:
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
                 else:
