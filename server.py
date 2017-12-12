@@ -109,10 +109,18 @@ class SiteWeb():
     def user_profile(self):
         if cherrypy.session.get('user') is not None:
             title ="<h2 >Welcome on you profile {}</h2>".format(cherrypy.session.get('user'))
+
             if len(self.memes) == 0:
                 user_profile = '<p>No memes</p>'
+
             else:
-                user_profile = '<ol>'
+                for i in range(len(self.users)):
+                    usersdb = self.users[i]
+                    if usersdb['username'] == cherrypy.session.get('user'):
+                        if usersdb['user_img'] is None:
+                            usersdb['user_img'] = 'img/user_img.jpg'
+
+                    user_profile = '''<ol>'''
                 for i in range(len(self.memes)):
                     datamemes = self.memes[i]
                     tags_strings = str(datamemes['tags'])[1:-1]
@@ -135,7 +143,7 @@ class SiteWeb():
                     else:
                         user_profile = '<p>No memes link to the user</p>'
 
-            return {'user_profile': user_profile, 'user': self.user_session(), 'title': title}
+            return {'user_profile': user_profile, 'user': self.user_session(), 'title': title, 'user_img': usersdb['user_img'], 'username':cherrypy.session.get('user')}
 
     @cherrypy.expose
     def add(self):
@@ -179,12 +187,13 @@ class SiteWeb():
         raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
-    def createusers(self, uname, psw):
-        if len(self.users)==0:
+    def createusers(self, uname, psw, img=None):
+        if len(self.users) == 0:
             cherrypy.session['user'] = uname
             self.users.append({
                 'username': uname,
                 'password': psw,
+                'user_img': img,
             })
             self.saveusers()
             raise cherrypy.HTTPRedirect('/')
@@ -192,10 +201,11 @@ class SiteWeb():
         for i in range(len(self.users)):
             usersdb = self.users[i]
             if uname != usersdb['username'] and psw != usersdb['password']:
-                cherrypy.session['user']=uname
+                cherrypy.session['user'] = uname
                 self.users.append({
                     'username': uname,
                     'password': psw,
+                    'user_img': img,
                 })
                 self.saveusers()
             raise cherrypy.HTTPRedirect('/')
@@ -205,7 +215,7 @@ class SiteWeb():
         if uname != '' and psw != '':
             for i in range(len(self.users)):
                 usersdb = self.users[i]
-                if uname in usersdb['username'] and psw in usersdb['password']:
+                if uname == usersdb['username'] and psw in usersdb['password']:
                     cherrypy.session['user'] = uname
                     raise cherrypy.HTTPRedirect('/')
                 else:

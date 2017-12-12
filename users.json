@@ -2,15 +2,13 @@
    "users": [
       {
          "username": "test",
-         "password": "test"
+         "password": "test",
+         "user_img": null
       },
       {
          "username": "victor",
-         "password": "smits"
-      },
-      {
-         "username": "victor",
-         "password": "smits"
+         "password": "smits",
+         "user_img": null
       }
    ]
 }

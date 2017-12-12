@@ -3,7 +3,10 @@
 {% extends "base.html" %}
 {% block h1 %} {{title}} {% endblock %}
 {% block content %}
-
-    {{user_profile}}
+<div class="card"> 
+	<img src="{{user_img}}" alt="" style="width:100%">
+  <h1>{{username}}</h1>
+</div>
+{{user_profile}}
 
 {% endblock %}
