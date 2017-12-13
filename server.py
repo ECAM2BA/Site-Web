@@ -69,7 +69,8 @@ class SiteWeb:
     def user_session(self):
         user_session = ''
         if cherrypy.session.get('user') is None:
-            user_session = '''<li><a href="logincall">login</a></li>'''
+            user_session = '''<li><a href="logincall">login</a></li>   
+                <li><a href="createuserscall">New users</a></li>'''
 
         if cherrypy.session.get('user') is not None:
             user_session = '''<li><a href="user_profile">user profile : {}</a></li>
@@ -200,15 +201,18 @@ class SiteWeb:
 
         for i in range(len(self.users)):
             usersdb = self.users[i]
-            if uname != usersdb['username'] and psw != usersdb['password']:
-                cherrypy.session['user'] = uname
-                self.users.append({
-                    'username': uname,
-                    'password': psw,
-                    'user_img': img,
-                })
-                self.saveusers()
-            raise cherrypy.HTTPRedirect('/')
+            if uname == usersdb['username'] and psw == usersdb['password']:
+                print("echec")
+                #popup
+
+        cherrypy.session['user'] = uname
+        self.users.append({
+            'username': uname,
+            'password': psw,
+            'user_img': img,
+        })
+        self.saveusers()
+        raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def login(self, uname, psw):

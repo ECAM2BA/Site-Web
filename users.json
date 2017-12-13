@@ -9,6 +9,11 @@
          "username": "victor",
          "password": "smits",
          "user_img": null
+      },
+      {
+         "username": "nicolas",
+         "password": "test",
+         "user_img": null
       }
    ]
 }
