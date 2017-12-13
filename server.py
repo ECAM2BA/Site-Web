@@ -14,7 +14,6 @@ class SiteWeb:
     def __init__(self):
         self.memes = self.loadmeme()
         self.users = self.loadusers()
-        self.admin = self.loadadmin()
 
     def loadusers(self):
         """Load links' database from the 'users.json' file."""
@@ -35,16 +34,6 @@ class SiteWeb:
                 }, ensure_ascii=False, indent=3))
         except:
             cherrypy.log('Saving database failed.')
-
-    def loadadmin(self):
-        """Load links' database from the 'admin.json' file."""
-        try:
-            with open('admin.json', 'r') as file:
-                content = json.loads(file.read())
-                return content['admin']
-        except:
-            cherrypy.log('Loading database failed.')
-            return []
 
     def savememes(self):
         """Save links' database to the 'db.json' file."""
@@ -77,6 +66,16 @@ class SiteWeb:
                 <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
+    def user_img(self):
+        for i in range(len(self.users)):
+            users_db = self.users[i]
+            user_img = users_db['user_img']
+            if users_db['username'] == cherrypy.session.get('user'):
+                if users_db['user_img'] is None:
+                    users_db['user_img'] = 'img/user_img.jpg'
+
+            return user_img
+
     @cherrypy.expose
     def index(self, tag_filter=''):
         """Main page of the SYL's application."""
@@ -96,6 +95,7 @@ class SiteWeb:
                     <ul class="memes_list">
                         <h2 >{}</h2>
                         <img src="{}" class="img">
+                        <p class="description">description:</p>
                         <p class="description">{}</p>
                         <p class="tags">{}</p>
                         <p class="tags">{}</p>
@@ -115,13 +115,6 @@ class SiteWeb:
                 user_profile = '<p>No memes in database</p>'
 
             else:
-                for i in range(len(self.users)):
-                    users_db = self.users[i]
-                    if users_db['username'] == cherrypy.session.get('user'):
-                        if users_db['user_img'] is None:
-                            users_db['user_img'] = 'img/user_img.jpg'
-
-                    user_profile = '''<ol>'''
                 for i in range(len(self.memes)):
                     data_memes = self.memes[i]
                     tags_strings = str(data_memes['tags'])[1:-1]
@@ -143,8 +136,8 @@ class SiteWeb:
                         if cherrypy.session.get('user') != data_memes['users']:
                             user_profile = '<p>No memes link to the user</p>'
 
-            return {'user_profile': user_profile, 'user': self.user_session(), 'title': title,
-                    'user_img': users_db['user_img'], 'username': cherrypy.session.get('user')}
+                return {'user_profile': user_profile, 'user': self.user_session(), 'title': title,
+                        'user_img': self.user_img(), 'username': cherrypy.session.get('user')}
 
     @cherrypy.expose
     def add(self):
@@ -202,8 +195,9 @@ class SiteWeb:
         for i in range(len(self.users)):
             usersdb = self.users[i]
             if uname == usersdb['username'] and psw == usersdb['password']:
-                print("echec")
-                #popup
+                user_error = '<h2 style="text-color: Red">Utilisateur existant</h2>'
+                print(user_error)
+                return {'user_error': user_error}
 
         cherrypy.session['user'] = uname
         self.users.append({

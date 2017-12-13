@@ -156,6 +156,7 @@ button[type=submit] {
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
+    margin-top : 50px;
 }
 
 /*Class*/
@@ -197,7 +198,10 @@ button[type=submit] {
 
 .nav {
     list-style-type: none;
-    overflow: auto;
+    overflow: hidden;
+    position : fixed;
+    top : 0;
+    width : 100%;
     background-color: #333;
 }
 .card {

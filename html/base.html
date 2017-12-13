@@ -6,9 +6,8 @@
 <link rel="stylesheet" href="/css/Style.css">
 <title>-Site Web</title>
 </head>
-<body id="container">
+<body>
 <header>
-  <h1>{% block h1 %}{% endblock %}</h1>
   <nav>
     <ul class="nav">
       <li><a href="index">Home</a></li>
@@ -17,7 +16,7 @@
     </ul>
   </nav>
 </header>
-	<main>
+	<main id="container">
   <div>{% block content %}{% endblock %}</div>
 </main>
 </body>

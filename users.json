@@ -8,12 +8,12 @@
       {
          "username": "victor",
          "password": "smits",
-         "user_img": null
+         "user_img": "img/user_img.jpg"
       },
       {
          "username": "nicolas",
          "password": "test",
-         "user_img": null
+         "user_img": "img/user_img.jpg"
       }
    ]
 }
