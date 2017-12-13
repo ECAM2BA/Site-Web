@@ -3,7 +3,7 @@
       {
          "username": "test",
          "password": "test",
-         "user_img": null
+         "user_img": "img/user_img.jpg"
       },
       {
          "username": "victor",

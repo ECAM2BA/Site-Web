@@ -8,7 +8,7 @@ import jinja2tool
 from cherrypy.lib.static import serve_file
 
 
-class SiteWeb():
+class SiteWeb:
     """Web application of the ShareYourLinks (SYL) application."""
 
     def __init__(self):
@@ -111,7 +111,7 @@ class SiteWeb():
             title = "<h2 >Welcome on you profile {}</h2>".format(cherrypy.session.get('user'))
 
             if len(self.memes) == 0:
-                user_profile = '<p>No memes</p>'
+                user_profile = '<p>No memes in database</p>'
 
             else:
                 for i in range(len(self.users)):
@@ -139,9 +139,8 @@ class SiteWeb():
                         </div>'''.format(data_memes['title'], img, data_memes['description'],
                                          tags_strings, data_memes['users'])
                         user_profile += '</ol>'
-
-                    else:
-                        user_profile = '<p>No memes link to the user</p>'
+                        if cherrypy.session.get('user') != data_memes['users']:
+                            user_profile = '<p>No memes link to the user</p>'
 
             return {'user_profile': user_profile, 'user': self.user_session(), 'title': title,
                     'user_img': users_db['user_img'], 'username': cherrypy.session.get('user')}
@@ -213,14 +212,13 @@ class SiteWeb():
 
     @cherrypy.expose
     def login(self, uname, psw):
-        if uname != '' and psw != '':
-            for i in range(len(self.users)):
-                usersdb = self.users[i]
-                if uname == usersdb['username'] and psw in usersdb['password']:
-                    cherrypy.session['user'] = uname
-                    raise cherrypy.HTTPRedirect('/')
-                else:
-                    raise cherrypy.HTTPRedirect('/createuserscall')
+        for i in range(len(self.users)):
+            usersdb = self.users[i]
+            if uname == usersdb['username'] and psw == usersdb['password']:
+                cherrypy.session['user'] = uname
+                raise cherrypy.HTTPRedirect('/')
+
+        raise cherrypy.HTTPRedirect('/createuserscall')
 
     @cherrypy.expose
     def logout(self):
