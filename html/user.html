@@ -3,9 +3,9 @@
 {% extends "base.html" %}
 {% block h1 %} {{title}} {% endblock %}
 {% block content %}
-<div class="card"> 
-	<img src="{{user_img}}" alt="" style="width:100%">
-  <h1>{{username}}</h1>
+<div class="card">
+	{{user_card}}
+    <li><a href="Edit_profile_call">Edit user profile</a></li>
 </div>
 {{user_profile}}
 

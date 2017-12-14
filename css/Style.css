@@ -127,6 +127,10 @@ button[type=submit] {
 	display: block;
 }
 
+body{
+	margin-top:7%; 
+}
+
 /*ID*/
 
 #container {

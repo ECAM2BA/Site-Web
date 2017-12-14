@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="edit_profile" enctype="multipart/form-data" id="add_form">
+  <h2 style="margin-top: 10px">
+                    <label>username<br/>
+                <input type="text" name="uname" value="victor">
+                </label>
+                </h2>
+                <h2 style="margin-top: 10px">
+                <label>Password<br/>
+                <input type="password" name="psw" value="smits" >
+                </label>
+                    </h2>
+  <h2 style="margin-bottom:30px">
+    <input type="file" name="img"/>
+  </h2>
+  <button type="submit" class="submit">Save</button>
+</form>
+{% endblock %}

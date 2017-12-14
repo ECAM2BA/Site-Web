@@ -66,16 +66,6 @@ class SiteWeb:
                 <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
-    def user_img(self):
-        for i in range(len(self.users)):
-            users_db = self.users[i]
-            user_img = users_db['user_img']
-            if users_db['username'] == cherrypy.session.get('user'):
-                if users_db['user_img'] is None:
-                    users_db['user_img'] = 'img/user_img.jpg'
-
-            return user_img
-
     @cherrypy.expose
     def index(self, tag_filter=''):
         """Main page of the SYL's application."""
@@ -108,13 +98,19 @@ class SiteWeb:
     @cherrypy.expose
     def user_profile(self):
         user_profile = ''
+        user_img = ''
         if cherrypy.session.get('user') is not None:
-            title = "<h2 >Welcome on you profile {}</h2>".format(cherrypy.session.get('user'))
 
             if len(self.memes) == 0:
                 user_profile = '<p>No memes in database</p>'
-
             else:
+                for i in range(len(self.users)):
+                    users_db = self.users[i]
+                    if cherrypy.session.get('user') == users_db['username']:
+                        user_img += '''<img src= "{}" alt="" style="width:100%">
+                       <h1>{}</h1>
+                            '''.format(users_db['user_img'], cherrypy.session.get('user'))
+
                 for i in range(len(self.memes)):
                     data_memes = self.memes[i]
                     tags_strings = str(data_memes['tags'])[1:-1]
@@ -136,8 +132,54 @@ class SiteWeb:
                         if cherrypy.session.get('user') != data_memes['users']:
                             user_profile = '<p>No memes link to the user</p>'
 
-                return {'user_profile': user_profile, 'user': self.user_session(), 'title': title,
-                        'user_img': self.user_img(), 'username': cherrypy.session.get('user')}
+            return {'user_profile': user_profile, 'user_card': user_img, 'user': self.user_session()}
+
+    @cherrypy.expose
+    def Edit_profile_call(self):
+        for i in range(len(self.users)):
+            usersdb = self.users[i]
+            Edit_Profile = ''
+            if cherrypy.session.get('user') == usersdb['username']:
+                Edit_Profile += '''<h2 style="margin-top: 10px">
+                    <label>username<br/>
+                <input type="text" name="uname" value="{}">
+                </label>
+                </h2>
+                <h2 style="margin-top: 10px">
+                <label>Password<br/>
+                <input type="password" name="psw" value="{}" >
+                </label>
+                    </h2>'''.format(usersdb['username'], usersdb['password'])
+
+            return {'Edit_Profile': Edit_Profile}
+
+    @cherrypy.expose
+    def edit_profile(self, uname, psw, img):
+        for i in range(len(self.users)):
+            usersdb = self.users[i]
+
+            if cherrypy.session.get('user') == usersdb['username']:
+                utilisateur = usersdb['username']
+                mdp = usersdb['password']
+                uimg = usersdb['user_img']
+
+                if uname != utilisateur:
+                    usersdb['username'] = uname
+
+                if psw != mdp:
+                    usersdb['password'] = psw
+
+                if img != uimg and img:
+                    upload_path = os.path.join(CURDIR, 'img/' + img.filename)
+                    with open(upload_path, 'wb') as ufile:
+                        while True:
+                            data = img.file.read(8192)
+                            if not data:
+                                break
+                            ufile.write(data)
+                    usersdb['user_img'] = 'img/' + img.filename
+
+        raise cherrypy.HTTPRedirect('/user_profile')
 
     @cherrypy.expose
     def add(self):
@@ -181,7 +223,7 @@ class SiteWeb:
         raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
-    def createusers(self, uname, psw, img=None):
+    def createusers(self, uname, psw, img='img/user_img.jpg'):
         if len(self.users) == 0:
             cherrypy.session['user'] = uname
             self.users.append({
@@ -267,3 +309,4 @@ if __name__ == '__main__':
     # Launch web server
     CURDIR = os.path.dirname(os.path.abspath(__file__))
     cherrypy.quickstart(SiteWeb(), '', 'server.conf')
+

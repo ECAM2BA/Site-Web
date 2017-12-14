@@ -1,10 +1,8 @@
 -admin app
     -manage user
     -manage meme
-    -manage admin
--nav bar scroll lock
--gestion d'erreur
+    -> cf lurkin erreur dlt db
 -cript password
 -finish user page
--last page
+-last page -> bio createur
 

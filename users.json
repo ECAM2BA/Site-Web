@@ -14,6 +14,10 @@
          "username": "nicolas",
          "password": "test",
          "user_img": "img/user_img.jpg"
+      },
+      {
+         "username": "nathan",
+         "password": "test",
+         "user_img": "img/user_img.jpg"
       }
-   ]
 }
