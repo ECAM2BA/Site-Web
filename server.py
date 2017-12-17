@@ -9,7 +9,6 @@ from cherrypy.lib.static import serve_file
 
 
 class SiteWeb:
-    """Web application of the ShareYourLinks (SYL) application."""
 
     def __init__(self):
         self.memes = self.loadmeme()
@@ -18,7 +17,7 @@ class SiteWeb:
     def loadusers(self):
         """Load links' database from the 'users.json' file."""
         try:
-            with open('users.json', 'r') as file:
+            with open('users.json', 'r+') as file:
                 content = json.loads(file.read())
                 return content['users']
         except:
@@ -48,7 +47,7 @@ class SiteWeb:
     def loadmeme(self):
         """Load links' database from the 'db.json' file."""
         try:
-            with open('db.json', 'r') as file:
+            with open('db.json', 'r+') as file:
                 content = json.loads(file.read())
                 return content['memes']
         except:
@@ -94,8 +93,8 @@ class SiteWeb:
                         <img src="{}" class="img">
                         <p class="description">description:</p>
                         <p class="description">{}</p>
-                        <p class="tags">{}</p>
-                        <p class="tags">{}</p>
+                        <p class="tags">tags : {}</p>
+                        <p class="tags">Auteur : {}</p>
                     </ul>
                     </div>'''.format(datamemes['title'], img, datamemes['description'],
                                      tags_strings, datamemes['users'])

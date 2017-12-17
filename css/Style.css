@@ -127,9 +127,6 @@ button[type=submit] {
 	display: block;
 }
 
-body{
-	margin-top:5%;
-}
 /*ID*/
 
 #container {
@@ -215,4 +212,7 @@ body{
 .button{
 	background-color: black;
 	color: white;
+}
+.position{
+	margin-top: 7%;
 }

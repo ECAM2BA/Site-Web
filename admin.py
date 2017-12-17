@@ -41,6 +41,7 @@ class AdminAppForm(GridLayout):
             - Title : {}
             - image ref : {}
             - Description : {}'''.format(Memes['title'], Memes['img_ref'], Memes['description'])
+
     def delete(self):
         data = urlopen('http://localhost:8080/deletememe?i=' + str(self.i))
         data = data.read().decode('utf-8')
@@ -48,13 +49,16 @@ class AdminAppForm(GridLayout):
             self.detail_Memes_txt.text = ''
             self.memes_spr.text = ''
             self.memes = loadmemes()
+
     def show_detail_users(self, text):
         if text !='':
             self.j = int(text.split('-')[0].strip())
             users = self.users[self.j]
-            self.detail_users_txt.text ='''
+            self.detail_users_txt.text = '''
             - Name : {}
-            - Password : {}'''.format(users['username'], users ['password'])
+            - Password : {}
+            - User image: {}'''.format(users['username'], users ['password'], users['user_img'])
+
     def delete_users(self):
         data = urlopen('http://localhost:8080/deleteusers?i=' + str(self.j))
         data = data.read().decode('utf-8')
