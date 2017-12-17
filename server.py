@@ -71,6 +71,7 @@ class SiteWeb:
             memes_db = self.memes[i]
             if old_user == memes_db['users']:
                 memes_db['users'] = cherrypy.session.get('user')
+                self.savememes()
 
     @cherrypy.expose
     def index(self, tag_filter=''):
@@ -155,17 +156,19 @@ class SiteWeb:
         for i in range(len(self.users)):
             usersdb = self.users[i]
             if cherrypy.session.get('user') == usersdb['username']:
-                utilisateur = usersdb['username']
-                mdp = usersdb['password']
+                old_user = usersdb['username']
+                old_psw = usersdb['password']
                 uimg = usersdb['user_img']
 
-                if uname != utilisateur:
+                if uname != old_user:
                     usersdb.update({'username': uname})
                     cherrypy.session['user'] = uname
-                    self.change_autor(utilisateur)
+                    self.saveusers()
+                    self.change_autor(old_user)
 
-                if psw != mdp:
-                    usersdb['password'] = psw
+                if psw != old_psw:
+                    usersdb.update({'password': psw})
+                    self.saveusers()
 
                 if img != uimg and img !='':
                     print(img)
@@ -177,18 +180,16 @@ class SiteWeb:
                                 break
                             ufile.write(data)
                     usersdb['user_img'] = 'img/' + img.filename
+                    self.saveusers()
 
-
-        raise cherrypy.HTTPRedirect('/')
+        raise cherrypy.HTTPRedirect('/user_profile')
 
     @cherrypy.expose
     def add(self):
         print(cherrypy.session.get('user'))
         if cherrypy.session.get('user') is not None:
-            print("if")
             return {'user': self.user_session()}
         else:
-            print("else")
             raise cherrypy.HTTPRedirect('/logincall')
 
     @cherrypy.expose
