@@ -128,9 +128,8 @@ button[type=submit] {
 }
 
 body{
-	margin-top:7%; 
+	margin-top:5%;
 }
-
 /*ID*/
 
 #container {
@@ -160,7 +159,6 @@ body{
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
-    margin-top : 50px;
 }
 
 /*Class*/
@@ -213,4 +211,8 @@ body{
     max-width: 300px;
     margin: auto;
     text-align: center;
+}
+.button{
+	background-color: black;
+	color: white;
 }

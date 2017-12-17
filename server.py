@@ -66,6 +66,12 @@ class SiteWeb:
                 <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
+    def change_autor(self, old_user):
+        for i in range(len(self.memes)):
+            memes_db = self.memes[i]
+            if old_user == memes_db['users']:
+                memes_db['users'] = cherrypy.session.get('user')
+
     @cherrypy.expose
     def index(self, tag_filter=''):
         """Main page of the SYL's application."""
@@ -138,38 +144,31 @@ class SiteWeb:
     def Edit_profile_call(self):
         for i in range(len(self.users)):
             usersdb = self.users[i]
-            Edit_Profile = ''
             if cherrypy.session.get('user') == usersdb['username']:
-                Edit_Profile += '''<h2 style="margin-top: 10px">
-                    <label>username<br/>
-                <input type="text" name="uname" value="{}">
-                </label>
-                </h2>
-                <h2 style="margin-top: 10px">
-                <label>Password<br/>
-                <input type="password" name="psw" value="{}" >
-                </label>
-                    </h2>'''.format(usersdb['username'], usersdb['password'])
-
-            return {'Edit_Profile': Edit_Profile}
+                user_psw = usersdb['password']
+                #user_img = usersdb['user_img']
+                return {'user_name': cherrypy.session.get('user'),'user_psw': user_psw, 'user': self.user_session()}
 
     @cherrypy.expose
-    def edit_profile(self, uname, psw, img):
+    def edit_profile(self, uname, psw, img='img/user_img.jpg'):
+
         for i in range(len(self.users)):
             usersdb = self.users[i]
-
             if cherrypy.session.get('user') == usersdb['username']:
                 utilisateur = usersdb['username']
                 mdp = usersdb['password']
                 uimg = usersdb['user_img']
 
                 if uname != utilisateur:
-                    usersdb['username'] = uname
+                    usersdb.update({'username': uname})
+                    cherrypy.session['user'] = uname
+                    self.change_autor(utilisateur)
 
                 if psw != mdp:
                     usersdb['password'] = psw
 
-                if img != uimg and img:
+                if img != uimg and img !='':
+                    print(img)
                     upload_path = os.path.join(CURDIR, 'img/' + img.filename)
                     with open(upload_path, 'wb') as ufile:
                         while True:
@@ -179,7 +178,8 @@ class SiteWeb:
                             ufile.write(data)
                     usersdb['user_img'] = 'img/' + img.filename
 
-        raise cherrypy.HTTPRedirect('/user_profile')
+
+        raise cherrypy.HTTPRedirect('/')
 
     @cherrypy.expose
     def add(self):

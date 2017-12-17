@@ -1,23 +1,14 @@
 {
    "users": [
       {
-         "username": "test",
-         "password": "test",
-         "user_img": "img/user_img.jpg"
-      },
-      {
          "username": "victor",
          "password": "smits",
          "user_img": "img/user_img.jpg"
       },
       {
-         "username": "nicolas",
-         "password": "test",
-         "user_img": "img/user_img.jpg"
-      },
-      {
-         "username": "nathan",
+         "username": "test",
          "password": "test",
          "user_img": "img/user_img.jpg"
       }
+   ]
 }

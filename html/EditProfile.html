@@ -5,16 +5,16 @@
 <form method="post" action="edit_profile" enctype="multipart/form-data" id="add_form">
   <h2 style="margin-top: 10px">
                     <label>username<br/>
-                <input type="text" name="uname" value="victor">
+                <input type="text" name="uname" value={{user_name}}>
                 </label>
                 </h2>
                 <h2 style="margin-top: 10px">
                 <label>Password<br/>
-                <input type="password" name="psw" value="smits" >
+                <input type="password" name="psw" value={{user_psw}} >
                 </label>
                     </h2>
   <h2 style="margin-bottom:30px">
-    <input type="file" name="img"/>
+    <input type="file" name="img" value={{user_img}}/>
   </h2>
   <button type="submit" class="submit">Save</button>
 </form>
