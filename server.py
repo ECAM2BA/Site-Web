@@ -7,6 +7,7 @@ import jinja2plugin
 import jinja2tool
 from cherrypy.lib.static import serve_file
 
+
 class SiteWeb:
 
     def __init__(self):
