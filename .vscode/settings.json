@@ -2,12 +2,13 @@
     "python.unitTest.unittestArgs": [
         "-v",
         "-s",
-        ".",
+        "./__pycache__",
         "-p",
         "*test.py"
     ],
     "python.unitTest.unittestEnabled": false,
-    "python.unitTest.promptToConfigure": false,
     "python.unitTest.pyTestEnabled": false,
-    "python.unitTest.nosetestsEnabled": false
+    "python.unitTest.nosetestsEnabled": false,
+    "python.pythonPath": "/usr/local/bin/python3.6",
+    "python.unitTest.promptToConfigure": false
 }

@@ -1,0 +1,73 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AdminApp	../admin.py	/^class AdminApp(App):$/;"	kind:class	line:69
+AdminAppForm	../admin.py	/^class AdminAppForm(GridLayout):$/;"	kind:class	line:25
+App	../admin.py	/^from kivy.app import App$/;"	kind:namespace	line:4
+Auteur_call	../server.py	/^    def Auteur_call(self):$/;"	kind:member	line:203
+CURDIR	../server.py	/^    CURDIR = os.path.dirname(os.path.abspath(__file__))$/;"	kind:variable	line:315
+ENV	../server.py	/^    ENV = jinja2.Environment(loader=jinja2.FileSystemLoader('.\/html'))$/;"	kind:variable	line:310
+Edit_profile_call	../server.py	/^    def Edit_profile_call(self):$/;"	kind:member	line:147
+GridLayout	../admin.py	/^from kivy.uix.gridlayout import GridLayout$/;"	kind:namespace	line:6
+Jinja2TemplatePlugin	../jinja2plugin.py	/^class Jinja2TemplatePlugin(plugins.SimplePlugin):$/;"	kind:class	line:10
+Jinja2Tool	../jinja2tool.py	/^class Jinja2Tool(cherrypy.Tool):$/;"	kind:class	line:10
+ObjectProperty	../admin.py	/^from kivy.properties import ObjectProperty$/;"	kind:namespace	line:5
+SiteWeb	../server.py	/^class SiteWeb:$/;"	kind:class	line:11
+__init__	../jinja2plugin.py	/^    def __init__(self, bus, env):$/;"	kind:member	line:13
+__init__	../jinja2tool.py	/^    def __init__(self):$/;"	kind:member	line:11
+__init__	../server.py	/^    def __init__(self):$/;"	kind:member	line:13
+_render	../jinja2tool.py	/^    def _render(self, template=None, debug=False):$/;"	kind:member	line:15
+add	../server.py	/^    def add(self):$/;"	kind:member	line:190
+addmeme	../server.py	/^    def addmeme(self, title, memesimg, description, tags):$/;"	kind:member	line:211
+admin.py	../admin.py	1;"	kind:file	line:1
+change_auteur	../server.py	/^    def change_auteur(self, old_user):$/;"	kind:member	line:68
+cherrypy	../jinja2tool.py	/^import cherrypy$/;"	kind:namespace	line:8
+cherrypy	../server.py	/^import cherrypy$/;"	kind:namespace	line:4
+createusers	../server.py	/^    def createusers(self, uname, psw, img='img\/user_img.jpg'):$/;"	kind:member	line:231
+createuserscall	../server.py	/^    def createuserscall(self):$/;"	kind:member	line:207
+delete	../admin.py	/^    def delete(self):$/;"	kind:member	line:44
+delete_users	../admin.py	/^    def delete_users(self):$/;"	kind:member	line:61
+deletememe	../server.py	/^    def deletememe(self, i):$/;"	kind:member	line:281
+deleteusers	../server.py	/^    def deleteusers(self, i):$/;"	kind:member	line:298
+detail_Memes_txt	../admin.py	/^    detail_Memes_txt = ObjectProperty()$/;"	kind:variable	line:28
+edit_profile	../server.py	/^    def edit_profile(self, uname, psw, img='img\/user_img.jpg'):$/;"	kind:member	line:156
+get_template	../jinja2plugin.py	/^    def get_template(self, name):$/;"	kind:member	line:32
+getmeme	../server.py	/^    def getmeme(self):$/;"	kind:member	line:274
+getusers	../server.py	/^    def getusers(self):$/;"	kind:member	line:291
+i	../admin.py	/^    i = -1$/;"	kind:variable	line:32
+index	../server.py	/^    def index(self, tag_filter=''):$/;"	kind:member	line:76
+j	../admin.py	/^    j = -1$/;"	kind:variable	line:33
+jinja2	../server.py	/^import jinja2$/;"	kind:namespace	line:5
+jinja2plugin	../server.py	/^import jinja2plugin$/;"	kind:namespace	line:6
+jinja2plugin.py	../jinja2plugin.py	1;"	kind:file	line:1
+jinja2tool	../server.py	/^import jinja2tool$/;"	kind:namespace	line:7
+jinja2tool.py	../jinja2tool.py	1;"	kind:file	line:1
+json	../admin.py	/^import json$/;"	kind:namespace	line:1
+json	../server.py	/^import json$/;"	kind:namespace	line:1
+loadmeme	../server.py	/^    def loadmeme(self):$/;"	kind:member	line:47
+loadmemes	../admin.py	/^def loadmemes():$/;"	kind:function	line:9
+loadusers	../admin.py	/^def loadusers():$/;"	kind:function	line:17
+loadusers	../server.py	/^    def loadusers(self):$/;"	kind:member	line:17
+login	../server.py	/^    def login(self, uname, psw):$/;"	kind:member	line:259
+logincall	../server.py	/^    def logincall(self):$/;"	kind:member	line:198
+logout	../server.py	/^    def logout(self):$/;"	kind:member	line:269
+memes_spr	../admin.py	/^    memes_spr = ObjectProperty()$/;"	kind:variable	line:27
+os	../server.py	/^import os.path$/;"	kind:namespace	line:2
+path	../server.py	/^import os.path$/;"	kind:namespace	line:2
+plugins	../jinja2plugin.py	/^from cherrypy.process import plugins$/;"	kind:namespace	line:8
+savememes	../server.py	/^    def savememes(self):$/;"	kind:member	line:37
+saveusers	../server.py	/^    def saveusers(self):$/;"	kind:member	line:27
+serve_file	../server.py	/^from cherrypy.lib.static import serve_file$/;"	kind:namespace	line:8
+server.py	../server.py	1;"	kind:file	line:1
+show_detail_Memes	../admin.py	/^    def show_detail_Memes(self, text):$/;"	kind:member	line:35
+show_detail_users	../admin.py	/^    def show_detail_users(self, text):$/;"	kind:member	line:52
+start	../jinja2plugin.py	/^    def start(self):$/;"	kind:member	line:17
+stop	../jinja2plugin.py	/^    def stop(self):$/;"	kind:member	line:24
+title	../admin.py	/^    title = 'admin app'$/;"	kind:variable	line:70
+urlopen	../admin.py	/^from urllib.request import urlopen$/;"	kind:namespace	line:2
+user_profile	../server.py	/^    def user_profile(self):$/;"	kind:member	line:108
+user_session	../server.py	/^    def user_session(self):$/;"	kind:member	line:57
+user_spr	../admin.py	/^    user_spr = ObjectProperty()$/;"	kind:variable	line:30
