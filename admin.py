@@ -28,7 +28,6 @@ class AdminAppForm(GridLayout):
     detail_Memes_txt = ObjectProperty()
     users, users_list = loadusers()
     user_spr = ObjectProperty()
-    detail_users_txt = ObjectProperty()
 
     i = -1
     j = -1

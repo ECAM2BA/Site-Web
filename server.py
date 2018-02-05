@@ -65,7 +65,7 @@ class SiteWeb:
                 <li><a href="logout">logout</a></li>'''.format(cherrypy.session.get('user'))
         return user_session
 
-    def change_autor(self, old_user):
+    def change_auteur(self, old_user):
         for i in range(len(self.memes)):
             memes_db = self.memes[i]
             if old_user == memes_db['users']:
@@ -74,13 +74,15 @@ class SiteWeb:
 
     @cherrypy.expose
     def index(self, tag_filter=''):
+        dblength = len(self.memes)
+        n = 0
         """Main page of the SYL's application."""
         if len(self.memes) == 0:
             mains = '<p>No memes in the database.</p>'
         else:
             mains = '<ol>'
-            for i in range(len(self.memes)):
-                datamemes = self.memes[i]
+            while n<dblength :
+                datamemes = self.memes[dblength-n-1]
                 tags_strings = str(datamemes['tags'])[1:-1]
 
                 if tag_filter in datamemes['tags'] or tag_filter == "":
@@ -99,6 +101,7 @@ class SiteWeb:
                     </div>'''.format(datamemes['title'], img, datamemes['description'],
                                      tags_strings, datamemes['users'])
                     mains += '</ol>'
+                n+=1
         return {'links': mains, 'user': self.user_session()}
 
     @cherrypy.expose
@@ -163,7 +166,7 @@ class SiteWeb:
                     usersdb.update({'username': uname})
                     cherrypy.session['user'] = uname
                     self.saveusers()
-                    self.change_autor(old_user)
+                    self.change_auteur(old_user)
 
                 if psw != old_psw:
                     usersdb.update({'password': psw})
@@ -197,13 +200,15 @@ class SiteWeb:
         return {'user': self.user_session()}
 
     @cherrypy.expose
+    def Auteur_call(self):
+        return {'user': self.user_session()}
+
+    @cherrypy.expose
     def createuserscall(self):
-        """Page with a form to add a new link."""
         return {'user': self.user_session()}
 
     @cherrypy.expose
     def addmeme(self, title, memesimg, description, tags):
-        """POST route to add a new link to the database."""
         if title != '' and memesimg:
             upload_path = os.path.join(CURDIR, 'img/' + memesimg.filename)
             with open(upload_path, 'wb') as ufile:

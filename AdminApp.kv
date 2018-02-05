@@ -6,7 +6,7 @@ AdminAppForm:
     detail_Memes_txt: detail_Memes
     detail_users_txt: detail_users
     Label:
-        text: str(len(root.memes)) + ' data loaded.'
+        text: str(len(root.memes)) + ' memes loaded.'
         size_hint_y: 1
 
     Spinner:
@@ -14,6 +14,7 @@ AdminAppForm:
         values: root.memes_list
         size_hint_y: 1
         on_text: root.show_detail_Memes(self.text)
+        text : 'choose a memes'
 
     TextInput:
         id: detail_Memes
@@ -24,10 +25,10 @@ AdminAppForm:
         orientation: 'horizontal'
         size_hint_y: 1
         Button:
-            text: 'Delete'
+            text: 'Delete meme'
             on_press: root.delete()
     Label:
-        text: str(len(root.users)) + ' data loaded.'
+        text: str(len(root.users)) + ' user loaded.'
         size_hint_y: 1
 
     Spinner:
@@ -35,6 +36,7 @@ AdminAppForm:
         values: root.users_list
         size_hint_y: 1
         on_text: root.show_detail_users(self.text)
+        text : 'choose a user'
 
     TextInput:
         id: detail_users
@@ -45,5 +47,5 @@ AdminAppForm:
         orientation: 'horizontal'
         size_hint_y: 1
         Button:
-            text: 'Delete'
+            text: 'Delete user'
             on_press: root.delete_users()

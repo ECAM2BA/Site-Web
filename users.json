@@ -3,11 +3,31 @@
       {
          "username": "victor",
          "password": "smits",
-         "user_img": "img/user_img.jpg"
+         "user_img": "img/London | GB_0091.jpg"
       },
       {
          "username": "test 2",
          "password": "test",
+         "user_img": "img/user_img.jpg"
+      },
+      {
+         "username": "test",
+         "password": "test",
+         "user_img": "img/London | GB_0102.jpg"
+      },
+      {
+         "username": "bonsward",
+         "password": "coucou",
+         "user_img": "img/user_img.jpg"
+      },
+      {
+         "username": "johnny",
+         "password": "merci",
+         "user_img": "img/user_img.jpg"
+      },
+      {
+         "username": "nathan",
+         "password": "vico",
          "user_img": "img/user_img.jpg"
       }
    ]

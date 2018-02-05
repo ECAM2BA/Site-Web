@@ -216,3 +216,9 @@ button[type=submit] {
 .position{
 	margin-top: 7%;
 }
+
+.ico{
+    position: relative;
+    right: 64%;
+    margin-top: 1%;
+}
