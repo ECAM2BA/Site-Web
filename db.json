@@ -170,6 +170,15 @@
          "tags": [
             "test"
          ]
+      },
+      {
+         "title": "truc",
+         "img_ref": "img/NumeÌriser.jpeg",
+         "description": "trcu",
+         "users": "victor smits",
+         "tags": [
+            "trcu"
+         ]
       }
    ]
 }

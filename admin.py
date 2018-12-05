@@ -7,7 +7,7 @@ from kivy.uix.gridlayout import GridLayout
 
 
 def loadmemes():
-    data_Memes = urlopen('http://localhost:8080/getmeme').read()
+    data_Memes = urlopen('http://127.0.0.1:8080/getmeme').read()
     data_Memes = json.loads(data_Memes.decode('utf-8'))
     memes_list = []
     for i in range(len(data_Memes['memes'])):
@@ -15,7 +15,7 @@ def loadmemes():
     return data_Memes['memes'], memes_list
 
 def loadusers():
-    data_users = urlopen('http://localhost:8080/getusers').read()
+    data_users = urlopen('http://127.0.0.1:8080/getusers').read()
     data_users = json.loads(data_users.decode('utf-8'))
     users_list = []
     for i in range(len(data_users['users'])):
@@ -42,7 +42,7 @@ class AdminAppForm(GridLayout):
             - Description : {}'''.format(Memes['title'], Memes['img_ref'], Memes['description'])
 
     def delete(self):
-        data = urlopen('http://localhost:8080/deletememe?i=' + str(self.i))
+        data = urlopen('http://127.0.0.1:8080/deletememe?i=' + str(self.i))
         data = data.read().decode('utf-8')
         if data == 'OK':
             self.detail_Memes_txt.text = ''
@@ -59,7 +59,7 @@ class AdminAppForm(GridLayout):
             - User image: {}'''.format(users['username'], users ['password'], users['user_img'])
 
     def delete_users(self):
-        data = urlopen('http://localhost:8080/deleteusers?i=' + str(self.j))
+        data = urlopen('http://127.0.0.1:8080/deleteusers?i=' + str(self.j))
         data = data.read().decode('utf-8')
         if data == 'OK':
             self.detail_users_txt.text = ''

@@ -29,6 +29,11 @@
          "username": "nathan",
          "password": "vico",
          "user_img": "img/user_img.jpg"
+      },
+      {
+         "username": "victor smits",
+         "password": "truc",
+         "user_img": "img/user_img.jpg"
       }
    ]
 }
